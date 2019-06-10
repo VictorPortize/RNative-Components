@@ -1,7 +1,7 @@
 import React from 'react'
 import {TouchableNativeFeedback, ViewStyle} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import Selection from '../../Icons/selection.json'
+import Selection from '../../../Icons/selection.json'
 import {createIconSetFromIcoMoon} from 'react-native-vector-icons'
 
 const Icons = createIconSetFromIcoMoon(Selection)
@@ -12,8 +12,10 @@ interface Props{
     size?: number,
     onPress: Function,
     iconColor?:string,
-    styleRounded?: ViewStyle | Array<ViewStyle>, 
+    styleRounded?: ViewStyle,
     disable:false,
+    disableColors?:Array<string>,
+    isDisable: boolean
 }
 
 export default class Icon extends React.Component<Props>{
@@ -29,11 +31,15 @@ export default class Icon extends React.Component<Props>{
         onPress:()=>{},
         size:24,
         disable:false,
+        isDisable:false
     }
 
 
     onPress = () =>{
         if(!this.props.disable){
+            if(this.props.isDisable){
+                this.setState({disable:!this.state.disable})
+            }
             this.props.onPress()
         }
     }
@@ -41,7 +47,7 @@ export default class Icon extends React.Component<Props>{
     render(){
         return(
             <TouchableNativeFeedback onPress={this.onPress} background={TouchableNativeFeedback.Ripple('transparent', false)} >
-                <LinearGradient style={this.props.styleRounded} colors={this.props.colors}>
+                <LinearGradient style={this.props.styleRounded} colors={this.state.disable? this.props.disableColors? this.props.disableColors : this.props.colors : this.props.colors}>
                     <Icons  color={this.props.iconColor} name={this.props.name} size={this.props.size} ></Icons>
                 </LinearGradient>
             </TouchableNativeFeedback>

@@ -1,22 +1,24 @@
 import React, {Component} from 'react'
 import {View, TextInput,StyleSheet, ViewStyle, KeyboardTypeOptions, Text, TextStyle, TextInputProps } from 'react-native'
-import Icon from '../Icon/Icon'
+import {createIconSetFromIcoMoon} from 'react-native-vector-icons'
+import selection from '../../../Icons/selection.json'
+
+const Icon = createIconSetFromIcoMoon(selection)
 
 interface Props extends TextInputProps {
     icon: string,
     iconSize: number,
     iconColor: string,
     styleInput: ViewStyle | Array<ViewStyle>,
+    styleContainerInput: ViewStyle | Array<ViewStyle>,
     placeholder: string,
     password: boolean,
     styleIcon: ViewStyle,
     keyboardType: KeyboardTypeOptions,
     label?: string,
-    styleLabel?: TextStyle | Array<TextStyle>,
+    styleLabel?: ViewStyle | Array<ViewStyle>,
     align?: "flex-start" | "flex-end" | "center" | "stretch" | "baseline",
-    onChangeText: (text: string) => void,
-    containerStyle: ViewStyle | Array<ViewStyle>,
-    onIconPress: () => void
+    onChangeText: (text: string) => void
 }
 
 export default class Input extends Component<Props>{
@@ -25,6 +27,7 @@ export default class Input extends Component<Props>{
         icon:undefined,
         iconSize:24,
         styleInput:{},
+        styleContainerInput:{},
         placeholder:"Placeholder",
         password:false,
         styleIcon:{},
@@ -32,18 +35,16 @@ export default class Input extends Component<Props>{
         keyboardType:'default',
         onChangeText: () => {},
         value: undefined,
-        editable: true,
-        containerStyle: {},
-        onIconPress: () => {}
+        editable: true
 }
 
     render(){
         return(
             <View style={{alignSelf:this.props.align}}>
                 {this.props.label? <Text style={this.props.styleLabel}>{this.props.label}</Text> : null}
-                <View style={[styles.styleContainerInput, this.props.containerStyle]}>
-                    <TextInput autoCapitalize={this.props.autoCapitalize} multiline={this.props.multiline} placeholderTextColor={this.props.placeholderTextColor} editable={this.props.editable} value={this.props.value} maxLength={this.props.maxLength} onChangeText={text => this.props.onChangeText(text)} onFocus={this.props.onFocus} keyboardType={this.props.keyboardType} secureTextEntry={this.props.password} placeholder={this.props.placeholder} style={[this.props.styleInput,{ zIndex:2}]}></TextInput>
-                    {this.props.icon == undefined? null : <View style={this.props.styleIcon}><Icon onPress={this.props.onIconPress} iconColor={this.props.iconColor} name={this.props.icon}size={this.props.iconSize} ></Icon></View>}
+                <View style={[styles.styleContainerInput,this.props.styleContainerInput]}>
+                    <TextInput editable={this.props.editable} value={this.props.value} maxLength={this.props.maxLength} onChangeText={text => this.props.onChangeText(text)} onFocus={this.props.onFocus} keyboardType={this.props.keyboardType} secureTextEntry={this.props.password} placeholder={this.props.placeholder} style={this.props.styleInput}></TextInput>
+                    {this.props.icon == undefined? null : <View style={this.props.styleIcon}><Icon color={this.props.iconColor} name={this.props.icon}size={this.props.iconSize} ></Icon></View>}
                 </View>
             </View>
         )

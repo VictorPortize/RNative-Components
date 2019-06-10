@@ -1,41 +1,47 @@
 import React from 'react'
-import {Dimensions, View, StyleSheet, Image, StatusBar} from 'react-native'
+import {Dimensions, View, StyleSheet, Image, StatusBar, ViewStyle} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import {toogleDrawer, goBack} from '../../Utils/NavigationService'
+// import {toogleDrawer} from '../../Utils/NavigationService'
 import Icon from '../Icon/Icon'
+import { Color } from 'csstype';
 
 
 let {width, height} = Dimensions.get('screen')
-
+const image = require('../../Images/logo.png')
+const colors = ['#FFFFFF','#FFFFFF']
+const arrowColors = ['#0BB7B7','#0BB7B7']
 
 interface Props{
     backArrow?:boolean,
-    noMenu?:boolean,
-    backFunc: Function
+    colors: Color,
+    arrowColors: Color,
+    headerStyle: ViewStyle | Array<ViewStyle>
 }
 
 export default class Header extends React.Component<Props>{
 
     static defaultProps = {
         backArrow:false,
-        backFunc: goBack
+        colors : ['#FFFFFF','#FFFFFF'],
+        arrowColors : ['#0BB7B7','#0BB7B7'],
+        headerStyle: {}
     }
 
     componentDidMount(){
-        StatusBar.setBackgroundColor('#202224')
-        StatusBar.setBarStyle('light-content')
+        StatusBar.setBackgroundColor('#FFF')
+        StatusBar.setBarStyle('dark-content')
     }
 
     render(){
         return(
-            <LinearGradient style={styles.styleContainer} colors={['#202224','#202224']} >
+            <LinearGradient style={[styles.styleContainer, this.props.headerStyle]} colors={colors}  >
                 <View style={{flexDirection:'row'}}>
-                    {this.props.backArrow? <Icon onPress={() => this.props.backFunc} size={width*0.05} colors={['#FF9100','#FFB217']} iconColor={'black'} styleRounded={styles.styleBackArrow} name={'back'} ></Icon> : null}
-                    {this.props.noMenu? null : <Icon onPress={() => toogleDrawer()} size={this.props.backArrow? width*0.06 : width*0.07} iconColor={'white'} name={'menu'} styleRounded={this.props.backArrow? styles.styleMenu : {}}></Icon>}
+                    {this.props.backArrow? <Icon size={width*0.05} colors={arrowColors} iconColor={'white'} styleRounded={styles.styleBackArrow} name={'back'} ></Icon> : null}
+                <Icon onPress={() => {}} size={this.props.backArrow? width*0.06 : width*0.07} iconColor={'white'} name={'menu'} styleRounded={this.props.backArrow? styles.styleMenu : {}}></Icon>
                 </View>
-                <Image source={require('../../Images/QnetYelloWhite.png')} style={[styles.stylesImage,this.props.backArrow? {left:-width*0.084473763}: {}]}></Image>
+                <Image source={image} style={[styles.stylesImage,this.props.backArrow? {left:-width*0.084473763}: {}]}></Image>
                 <View style={{width:width*0.07}}></View>
-            </LinearGradient>                
+            </LinearGradient>
         )
     }
 }
@@ -44,16 +50,17 @@ const styles = StyleSheet.create({
     styleContainer:{
         height:height*0.1,
         width,
+        display:'flex',
         alignItems:'center',
         paddingHorizontal:width*0.034666667,
         flexDirection:'row',
         justifyContent:'space-between',
-        borderBottomLeftRadius:height*0.033973641,
-        borderBottomRightRadius:height*0.033973641,
+        elevation: 10,
+        borderRadius: 0.1,
     },
     stylesImage:{
-        width:width*0.30824,
-        height:height*0.052473763,
+        width:width*0.35,
+        height:height*0.06,
         resizeMode:'contain',
     },
     styleBackArrow:{
