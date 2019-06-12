@@ -1,5 +1,5 @@
 import React from 'react'
-import {Dimensions, View, StyleSheet, Image, StatusBar, ViewStyle} from 'react-native'
+import {Dimensions, View, StyleSheet, Image, StatusBar, ViewStyle, Alert} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 // import {toogleDrawer} from '../../Utils/NavigationService'
 import Icon from '../Icon/Icon'
@@ -36,8 +36,8 @@ export default class Header extends React.Component<Props>{
         return(
             <LinearGradient style={[styles.styleContainer, this.props.headerStyle]} colors={colors}  >
                 <View style={{flexDirection:'row'}}>
-                    {this.props.backArrow? <Icon size={width*0.05} colors={arrowColors} iconColor={'white'} styleRounded={styles.styleBackArrow} name={'back'} ></Icon> : null}
-                <Icon onPress={() => {}} size={this.props.backArrow? width*0.06 : width*0.07} iconColor={'white'} name={'menu'} styleRounded={this.props.backArrow? styles.styleMenu : {}}></Icon>
+                    {this.props.backArrow? <Icon size={width*0.05} onPress={() => Alert.alert('asdas','asdasd')} colors={arrowColors} iconColor={'white'} styleRounded={styles.styleBackArrow} name={'back'} ></Icon> : null}
+                <Icon onPress={() => Alert.alert('asdasd','sdasdas')} size={this.props.backArrow? width*0.06 : width*0.07} iconColor={'white'} name={'menu'} styleRounded={this.props.backArrow? styles.styleMenu : {}}></Icon>
                 </View>
                 <Image source={image} style={[styles.stylesImage,this.props.backArrow? {left:-width*0.084473763}: {}]}></Image>
                 <View style={{width:width*0.07}}></View>

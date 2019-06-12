@@ -37,9 +37,6 @@ export default class Icon extends React.Component<Props>{
 
     onPress = () =>{
         if(!this.props.disable){
-            if(this.props.isDisable){
-                this.setState({disable:!this.state.disable})
-            }
             this.props.onPress()
         }
     }
@@ -48,7 +45,7 @@ export default class Icon extends React.Component<Props>{
         return(
             <TouchableNativeFeedback onPress={this.onPress} background={TouchableNativeFeedback.Ripple('transparent', false)} >
                 <LinearGradient style={this.props.styleRounded} colors={this.state.disable? this.props.disableColors? this.props.disableColors : this.props.colors : this.props.colors}>
-                    <Icons  color={this.props.iconColor} name={this.props.name} size={this.props.size} ></Icons>
+                    <Icons color={this.props.iconColor} name={this.props.name} size={this.props.size} ></Icons>
                 </LinearGradient>
             </TouchableNativeFeedback>
         )
